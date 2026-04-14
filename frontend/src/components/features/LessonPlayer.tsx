@@ -1,3 +1,5 @@
+import { Video } from "lucide-react";
+
 interface LessonPlayerProps {
   videoUrl: string | null;
   title: string;
@@ -6,17 +8,24 @@ interface LessonPlayerProps {
 export default function LessonPlayer({ videoUrl, title }: LessonPlayerProps) {
   if (!videoUrl) {
     return (
-      <div className="flex aspect-video items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800">
-        <div className="text-center">
-          <p className="text-zinc-400">Video em breve</p>
-          <p className="mt-1 text-sm text-zinc-600">{title}</p>
+      <div className="flex aspect-video items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10">
+            <Video size={24} className="text-violet-400" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-zinc-400">
+              Conteúdo em breve
+            </p>
+            <p className="mt-1 text-xs text-zinc-600">{title}</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="aspect-video overflow-hidden rounded-xl border border-zinc-800">
+    <div className="aspect-video overflow-hidden rounded-2xl border border-white/[0.06]">
       <iframe
         src={videoUrl}
         title={title}
