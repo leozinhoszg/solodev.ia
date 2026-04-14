@@ -11,13 +11,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-violet-600 text-white hover:bg-violet-700 focus-visible:ring-violet-500",
+    "bg-gradient-to-r from-violet-700 to-violet-500 text-white shadow-[0_0_12px_rgba(124,58,237,0.25)] hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] focus-visible:ring-violet-500",
   secondary:
-    "bg-zinc-800 text-zinc-100 hover:bg-zinc-700 focus-visible:ring-zinc-500",
+    "bg-white/5 text-zinc-100 border border-white/10 hover:bg-white/8 hover:border-white/15 focus-visible:ring-zinc-500",
   ghost:
-    "bg-transparent text-zinc-300 hover:bg-zinc-800 focus-visible:ring-zinc-500",
+    "bg-transparent text-zinc-400 hover:bg-white/5 hover:text-zinc-200 focus-visible:ring-zinc-500",
   danger:
-    "bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500",
+    "bg-gradient-to-r from-red-700 to-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] focus-visible:ring-red-500",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -37,7 +37,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:opacity-50 disabled:pointer-events-none ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07070d] disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       disabled={disabled || loading}
       {...props}
     >
