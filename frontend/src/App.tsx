@@ -8,6 +8,8 @@ import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import Lesson from "./pages/Lesson";
 import PromptLabPage from "./pages/PromptLab";
+import Dungeons from "./pages/Dungeons";
+import DungeonDetail from "./pages/DungeonDetail";
 
 export default function App() {
   return (
@@ -63,6 +65,26 @@ export default function App() {
           <ProtectedRoute>
             <PageWrapper>
               <Lesson />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <Dungeons />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects/:slug"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <DungeonDetail />
             </PageWrapper>
           </ProtectedRoute>
         }
