@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { CheckCircle } from "lucide-react";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
+import Skeleton from "../components/ui/Skeleton";
 import LessonPlayer from "../components/features/LessonPlayer";
 import { getLesson, type Lesson as LessonType } from "../services/courseService";
 import { completeLesson } from "../services/progressService";
@@ -38,8 +40,13 @@ export default function Lesson() {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-12">
-        <span className="h-8 w-8 animate-spin rounded-full border-2 border-violet-400 border-t-transparent" />
+      <div className="flex flex-col gap-6">
+        <div>
+          <Skeleton className="h-7 w-72" />
+          <Skeleton className="mt-2 h-4 w-40" />
+        </div>
+        <Skeleton className="aspect-video w-full rounded-2xl" />
+        <Skeleton className="h-10 w-48" />
       </div>
     );
   }
@@ -47,7 +54,7 @@ export default function Lesson() {
   if (!lesson) {
     return (
       <div className="flex flex-col items-center gap-4 py-12">
-        <p className="text-red-400">Aula nao encontrada</p>
+        <p className="text-red-400">Aula não encontrada</p>
         <Link to={`/courses/${id}`}>
           <Button variant="secondary">Voltar ao curso</Button>
         </Link>
@@ -71,12 +78,20 @@ export default function Lesson() {
 
       <div className="flex items-center justify-between">
         {completed && xpEarned > 0 && (
-          <p className="text-sm font-medium text-emerald-400">
-            +{xpEarned} XP conquistados!
-          </p>
+          <div className="flex items-center gap-2 animate-fade-in-up">
+            <CheckCircle
+              size={18}
+              className="text-emerald-400 animate-glow-pulse"
+            />
+            <p className="font-mono text-sm font-bold text-emerald-400">
+              +{xpEarned} XP conquistados!
+            </p>
+          </div>
         )}
         {completed && xpEarned === 0 && (
-          <p className="text-sm text-zinc-500">Missao ja completada anteriormente</p>
+          <p className="text-sm text-zinc-600">
+            Missão já completada anteriormente
+          </p>
         )}
         {!completed && <div />}
 
@@ -86,7 +101,7 @@ export default function Lesson() {
           disabled={completed}
           variant={completed ? "secondary" : "primary"}
         >
-          {completed ? "Missao concluida" : "Marcar como concluida"}
+          {completed ? "Missão concluída" : "Marcar como concluída"}
         </Button>
       </div>
     </div>
