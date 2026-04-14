@@ -6,8 +6,12 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import Skeleton from "../components/ui/Skeleton";
 import AttributeBar from "../components/features/AttributeBar";
+import BadgeCard from "../components/features/BadgeCard";
+import QuestItem from "../components/features/QuestItem";
+import StreakCounter from "../components/features/StreakCounter";
 import { useAuthStore } from "../store/useAuthStore";
 import { getDashboard, type DashboardData } from "../services/progressService";
+import { getGamificationData, type GamificationData } from "../services/gamificationService";
 import { useCountUp } from "../hooks/useCountUp";
 import { useStaggered } from "../hooks/useStaggered";
 
@@ -52,16 +56,17 @@ function StatCard({
 export default function Dashboard() {
   const user = useAuthStore((s) => s.user);
   const [data, setData] = useState<DashboardData | null>(null);
+  const [gamData, setGamData] = useState<GamificationData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getDashboard()
-      .then(setData)
+    Promise.all([getDashboard(), getGamificationData()])
+      .then(([d, g]) => { setData(d); setGamData(g); })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
 
-  const staggered = useStaggered(loading ? 0 : 5);
+  const staggered = useStaggered(loading ? 0 : 8);
 
   if (loading) {
     return (
@@ -211,6 +216,55 @@ export default function Dashboard() {
                 colorTo="to-violet-400"
                 glowColor="rgba(167,139,250,0.3)"
               />
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Streak + Quests */}
+      {gamData && (
+        <div
+          className={`grid grid-cols-1 gap-4 md:grid-cols-3 transition-all duration-300 ease-out ${staggered[5] ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+        >
+          {/* Streak */}
+          <Card>
+            <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[1.5px] text-zinc-500">
+              Combo de Caçadas
+            </h2>
+            <StreakCounter streak={gamData.streak} />
+          </Card>
+
+          {/* Quests */}
+          <Card className="md:col-span-2">
+            <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-[1.5px] text-zinc-500">
+              Quests
+            </h2>
+            <div className="flex flex-col gap-0.5">
+              {[...gamData.quests.main, ...gamData.quests.daily, ...gamData.quests.side].map((q) => (
+                <QuestItem key={q.quest_id} quest={q} />
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Badges */}
+      {gamData && (
+        <div
+          className={`transition-all duration-300 ease-out ${staggered[6] ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+        >
+          <Card>
+            <h2 className="mb-5 text-[10px] font-semibold uppercase tracking-[1.5px] text-zinc-500">
+              Badges ({gamData.earnedBadges.length} / {gamData.allBadges.length})
+            </h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {gamData.allBadges.map((badge) => (
+                <BadgeCard
+                  key={badge.id}
+                  badge={badge}
+                  earned={gamData.earnedBadges.find((eb) => eb.slug === badge.slug)}
+                />
+              ))}
             </div>
           </Card>
         </div>

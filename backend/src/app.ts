@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import progressRoutes from "./routes/progress.routes.js";
 import promptRoutes from "./routes/prompt.routes.js";
+import gamificationRoutes from "./routes/gamification.routes.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/prompts", promptRoutes);
+app.use("/api/gamification", gamificationRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
