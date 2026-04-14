@@ -10,6 +10,7 @@ import Lesson from "./pages/Lesson";
 import PromptLabPage from "./pages/PromptLab";
 import Dungeons from "./pages/Dungeons";
 import DungeonDetail from "./pages/DungeonDetail";
+import Awakening from "./pages/Awakening";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       {/* Auth pages (sem sidebar) */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/awakening" element={<ProtectedRoute><Awakening /></ProtectedRoute>} />
 
       {/* App pages (protegidas + com sidebar) */}
       <Route

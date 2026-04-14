@@ -10,6 +10,7 @@ import progressRoutes from "./routes/progress.routes.js";
 import promptRoutes from "./routes/prompt.routes.js";
 import gamificationRoutes from "./routes/gamification.routes.js";
 import dungeonRoutes from "./routes/dungeon.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use("/api/progress", progressRoutes);
 app.use("/api/prompts", promptRoutes);
 app.use("/api/gamification", gamificationRoutes);
 app.use("/api/dungeons", dungeonRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
