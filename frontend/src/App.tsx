@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import PageWrapper from "./components/layout/PageWrapper";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -11,13 +12,15 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* App pages (com sidebar) */}
+      {/* App pages (protegidas + com sidebar) */}
       <Route
         path="/"
         element={
-          <PageWrapper>
-            <Dashboard />
-          </PageWrapper>
+          <ProtectedRoute>
+            <PageWrapper>
+              <Dashboard />
+            </PageWrapper>
+          </ProtectedRoute>
         }
       />
     </Routes>
