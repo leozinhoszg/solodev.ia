@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { PlayCircle } from "lucide-react";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
-import { getCourse, type CourseDetail as CourseDetailType } from "../services/courseService";
+import Skeleton from "../components/ui/Skeleton";
+import {
+  getCourse,
+  type CourseDetail as CourseDetailType,
+} from "../services/courseService";
 
 function formatDuration(seconds: number | null): string {
   if (!seconds) return "";
@@ -20,14 +25,23 @@ export default function CourseDetail() {
     if (!id) return;
     getCourse(Number(id))
       .then(setCourse)
-      .catch((err) => setError(err.response?.data?.error?.message || "Erro ao carregar curso"))
+      .catch((err) =>
+        setError(
+          err.response?.data?.error?.message || "Erro ao carregar curso",
+        ),
+      )
       .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) {
     return (
-      <div className="flex justify-center py-12">
-        <span className="h-8 w-8 animate-spin rounded-full border-2 border-violet-400 border-t-transparent" />
+      <div className="flex flex-col gap-8">
+        <div>
+          <Skeleton className="h-7 w-64" />
+          <Skeleton className="mt-2 h-4 w-40" />
+        </div>
+        <Skeleton className="h-40" />
+        <Skeleton className="h-40" />
       </div>
     );
   }
@@ -57,21 +71,30 @@ export default function CourseDetail() {
 
       <div className="flex flex-col gap-6">
         {course.modules.map((mod) => (
-          <div key={mod.id} className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
-            <h3 className="mb-3 text-sm font-semibold text-zinc-300">
+          <div
+            key={mod.id}
+            className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5"
+          >
+            <h3 className="mb-3 text-[10px] font-semibold uppercase tracking-[1.5px] text-zinc-500">
               Módulo {mod.order_index} — {mod.title}
             </h3>
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col gap-0.5">
               {mod.lessons.map((lesson) => (
                 <li key={lesson.id}>
                   <Link
                     to={`/courses/${course.id}/lessons/${lesson.id}`}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-zinc-300 transition-colors hover:bg-zinc-800"
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-zinc-300 transition-all duration-150 hover:bg-white/[0.04]"
                   >
-                    <span>
-                      {lesson.order_index}. {lesson.title}
-                    </span>
-                    <span className="text-xs text-zinc-600">
+                    <div className="flex items-center gap-3">
+                      <PlayCircle
+                        size={16}
+                        className="text-violet-400"
+                      />
+                      <span>
+                        {lesson.order_index}. {lesson.title}
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs text-zinc-600">
                       {formatDuration(lesson.duration_s)}
                       {lesson.xp_reward > 0 && ` · +${lesson.xp_reward} XP`}
                     </span>
