@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Courses from "./pages/Courses";
 import CourseDetail from "./pages/CourseDetail";
 import Lesson from "./pages/Lesson";
+import PromptLabPage from "./pages/PromptLab";
 
 export default function App() {
   return (
@@ -42,6 +43,16 @@ export default function App() {
           <ProtectedRoute>
             <PageWrapper>
               <CourseDetail />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/prompt-lab"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <PromptLabPage />
             </PageWrapper>
           </ProtectedRoute>
         }

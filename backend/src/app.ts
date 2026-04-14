@@ -7,6 +7,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import authRoutes from "./routes/auth.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import progressRoutes from "./routes/progress.routes.js";
+import promptRoutes from "./routes/prompt.routes.js";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/progress", progressRoutes);
+app.use("/api/prompts", promptRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
