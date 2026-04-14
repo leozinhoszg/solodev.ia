@@ -8,8 +8,12 @@ export default function Header({ title, subtitle, action }: HeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div>
-        <h1 className="text-2xl font-bold text-zinc-100">{title}</h1>
-        {subtitle && <p className="mt-1 text-sm text-zinc-400">{subtitle}</p>}
+        <h1 className="text-2xl font-bold tracking-tight text-slate-100">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mt-1 text-sm text-zinc-500">{subtitle}</p>
+        )}
       </div>
       {action && <div>{action}</div>}
     </div>
