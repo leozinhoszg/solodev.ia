@@ -4,6 +4,9 @@ import ProtectedRoute from "./components/layout/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
+import Lesson from "./pages/Lesson";
 
 export default function App() {
   return (
@@ -19,6 +22,36 @@ export default function App() {
           <ProtectedRoute>
             <PageWrapper>
               <Dashboard />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courses"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <Courses />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courses/:id"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <CourseDetail />
+            </PageWrapper>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courses/:id/lessons/:lessonId"
+        element={
+          <ProtectedRoute>
+            <PageWrapper>
+              <Lesson />
             </PageWrapper>
           </ProtectedRoute>
         }
