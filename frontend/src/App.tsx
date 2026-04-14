@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
+import AuthLayout from "./components/layout/AuthLayout";
 import PageWrapper from "./components/layout/PageWrapper";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import IrisOverlay from "./components/transitions/IrisOverlay";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,10 +16,13 @@ import Awakening from "./pages/Awakening";
 
 export default function App() {
   return (
+    <>
     <Routes>
       {/* Auth pages (sem sidebar) */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
       <Route path="/awakening" element={<ProtectedRoute><Awakening /></ProtectedRoute>} />
 
       {/* App pages (protegidas + com sidebar) */}
@@ -92,5 +97,7 @@ export default function App() {
         }
       />
     </Routes>
+    <IrisOverlay />
+    </>
   );
 }

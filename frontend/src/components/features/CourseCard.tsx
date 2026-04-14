@@ -43,7 +43,7 @@ export default function CourseCard({ course }: CourseCardProps) {
               </h3>
             </div>
           </div>
-          <span className="rounded-full bg-white/[0.04] px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-zinc-600">
+          <span className="rounded-full bg-white/4 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-zinc-600">
             Requer Awakening
           </span>
         </div>

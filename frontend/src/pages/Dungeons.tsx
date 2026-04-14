@@ -71,7 +71,7 @@ export default function Dungeons() {
           d.locked ? (
             <Card key={d.id} className="opacity-50">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.04]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/4">
                   <Lock size={20} className="text-zinc-700" />
                 </div>
                 <div className="flex-1">
@@ -87,7 +87,7 @@ export default function Dungeons() {
             <Link key={d.id} to={`/projects/${d.slug}`}>
               <Card variant="highlighted" hoverable className={rankGlow[d.rank_required] ?? ""}>
                 <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-700/20 to-violet-500/20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-violet-700/20 to-violet-500/20">
                     <Castle size={20} className={rankColors[d.rank_required] ?? "text-violet-400"} />
                   </div>
                   <div className="flex-1">

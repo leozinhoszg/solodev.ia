@@ -48,10 +48,10 @@ export default function Awakening() {
           <ArrowLeft size={16} /> Voltar ao Status Window
         </Link>
 
-        <div className="animate-fade-in-up rounded-2xl border border-violet-500/20 bg-white/[0.03] p-8 shadow-[0_0_30px_rgba(139,92,246,0.1)]">
+        <div className="animate-fade-in-up rounded-2xl border border-violet-500/20 bg-white/3 p-8 shadow-[0_0_30px_rgba(139,92,246,0.1)]">
           {/* Header */}
           <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-700 to-violet-500 shadow-[0_0_30px_rgba(124,58,237,0.4)]">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-violet-700 to-violet-500 shadow-[0_0_30px_rgba(124,58,237,0.4)]">
               <Zap size={32} className="text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-100">
@@ -69,7 +69,7 @@ export default function Awakening() {
           {/* Features */}
           <div className="mb-8 flex flex-col gap-3">
             {features.map((f) => (
-              <div key={f.label} className="flex items-center gap-3 rounded-lg bg-white/[0.03] px-4 py-3">
+              <div key={f.label} className="flex items-center gap-3 rounded-lg bg-white/3 px-4 py-3">
                 <f.icon size={18} className="text-violet-400" />
                 <div>
                   <p className="text-sm font-medium text-zinc-200">{f.label}</p>

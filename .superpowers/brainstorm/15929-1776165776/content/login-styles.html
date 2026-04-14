@@ -1,0 +1,88 @@
+<h2>Login Page — Primeira Impressão</h2>
+<p class="subtitle">Como o usuário deve ser recebido ao entrar no SoloDev.AI?</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #07070d; min-height: 320px; display: flex; overflow: hidden; position: relative;">
+      <!-- Left side: atmospheric branding -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 28px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 40% 30%, rgba(139,92,246,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(59,130,246,0.06) 0%, transparent 50%);"></div>
+        <div style="position: relative; z-index: 1;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #5b21b6, #7c3aed); box-shadow: 0 0 12px rgba(124,58,237,0.3); display: flex; align-items: center; justify-content: center;">
+              <span style="color: white; font-weight: 700; font-size: 16px;">⚔</span>
+            </div>
+            <span style="color: #f1f5f9; font-weight: 700; font-size: 18px; letter-spacing: -0.5px;">SoloDev.AI</span>
+          </div>
+          <div style="color: #e2e8f0; font-size: 22px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 8px;">Evolua como<br/>desenvolvedor.</div>
+          <div style="color: #64748b; font-size: 12px; line-height: 1.6;">Complete missões. Suba de rank.<br/>Torne-se um Hunter S-Rank.</div>
+          <!-- Floating stats -->
+          <div style="display: flex; gap: 16px; margin-top: 24px;">
+            <div>
+              <div style="color: #a78bfa; font-size: 20px; font-family: monospace; font-weight: 700;">500+</div>
+              <div style="color: #475569; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px;">Missões</div>
+            </div>
+            <div>
+              <div style="color: #34d399; font-size: 20px; font-family: monospace; font-weight: 700;">6</div>
+              <div style="color: #475569; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px;">Ranks</div>
+            </div>
+            <div>
+              <div style="color: #60a5fa; font-size: 20px; font-family: monospace; font-weight: 700;">∞</div>
+              <div style="color: #475569; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px;">Potencial</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right side: form -->
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 28px; background: rgba(255,255,255,0.02); border-left: 1px solid rgba(255,255,255,0.05);">
+        <div style="color: #f1f5f9; font-size: 16px; font-weight: 600; margin-bottom: 4px;">Entrar</div>
+        <div style="color: #64748b; font-size: 11px; margin-bottom: 20px;">Continue sua jornada como Hunter</div>
+        <div style="margin-bottom: 12px;">
+          <div style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Email</div>
+          <div style="height: 36px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;"></div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Senha</div>
+          <div style="height: 36px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;"></div>
+        </div>
+        <div style="height: 38px; background: linear-gradient(135deg, #6d28d9, #7c3aed); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 600; box-shadow: 0 0 12px rgba(124,58,237,0.25);">Iniciar Jornada</div>
+        <div style="color: #475569; font-size: 11px; text-align: center; margin-top: 14px;">Novo Hunter? <span style="color: #a78bfa;">Criar conta</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Split Layout (Branding + Form)</h3>
+      <p>Tela dividida: lado esquerdo com marca, stats atmosféricos e radial gradients; lado direito com formulário limpo. Forte primeira impressão.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #07070d; min-height: 320px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+      <!-- Background atmosphere -->
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.05) 0%, transparent 40%);"></div>
+      <!-- Centered card -->
+      <div style="position: relative; z-index: 1; width: 280px; padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; backdrop-filter: blur(8px);">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #5b21b6, #7c3aed); box-shadow: 0 0 20px rgba(124,58,237,0.3); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+            <span style="color: white; font-weight: 700; font-size: 20px;">⚔</span>
+          </div>
+          <div style="color: #f1f5f9; font-size: 18px; font-weight: 700; letter-spacing: -0.5px;">SoloDev.AI</div>
+          <div style="color: #64748b; font-size: 11px; margin-top: 4px;">Entre para continuar sua jornada</div>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <div style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Email</div>
+          <div style="height: 36px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;"></div>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <div style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Senha</div>
+          <div style="height: 36px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;"></div>
+        </div>
+        <div style="height: 38px; background: linear-gradient(135deg, #6d28d9, #7c3aed); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 600; box-shadow: 0 0 12px rgba(124,58,237,0.25);">Iniciar Jornada</div>
+        <div style="color: #475569; font-size: 11px; text-align: center; margin-top: 14px;">Novo Hunter? <span style="color: #a78bfa;">Criar conta</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Card Centralizado com Atmosfera</h3>
+      <p>Card glassmorphism centralizado sobre fundo atmosférico com auras. Focado, limpo, imersivo. Logo + form em um único bloco.</p>
+    </div>
+  </div>
+</div>

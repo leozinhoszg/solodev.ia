@@ -20,7 +20,7 @@ const typeColor: Record<string, string> = {
 export default function QuestItem({ quest }: QuestItemProps) {
   return (
     <div className={`flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 ${
-      quest.completed ? "opacity-60" : "hover:bg-white/[0.03]"
+      quest.completed ? "opacity-60" : "hover:bg-white/3"
     }`}>
       {quest.completed ? (
         <CheckCircle size={16} className="text-emerald-400" />

@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#07070d]">
         <div className="flex flex-col items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-700 to-violet-500 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-violet-700 to-violet-500 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
             <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
           </div>
           <div className="flex flex-col items-center gap-2">

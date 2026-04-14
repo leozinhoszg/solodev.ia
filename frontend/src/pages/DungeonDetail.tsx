@@ -127,7 +127,7 @@ export default function DungeonDetail() {
                 key={cp.id}
                 onClick={() => handleToggleCheckpoint(cp.id, !cp.checked)}
                 disabled={completed}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-150 hover:bg-white/[0.03] disabled:pointer-events-none cursor-pointer"
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-150 hover:bg-white/3 disabled:pointer-events-none cursor-pointer"
               >
                 {cp.checked ? (
                   <CheckCircle size={18} className="text-emerald-400" />
@@ -163,7 +163,7 @@ export default function DungeonDetail() {
       {completed && xpEarned > 0 && (
         <Card variant="highlighted" className="animate-fade-in-up">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600/30 to-emerald-400/30 animate-glow-pulse">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-emerald-600/30 to-emerald-400/30 animate-glow-pulse">
               <Trophy size={24} className="text-emerald-400" />
             </div>
             <div>

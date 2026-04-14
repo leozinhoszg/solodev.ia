@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import type { SignOptions } from "jsonwebtoken";
+import { randomUUID } from "crypto";
 import { env } from "../config/env.js";
 
 interface TokenPayload {
@@ -26,7 +27,10 @@ export function signAccessToken(userId: number): string {
 }
 
 export function signRefreshToken(userId: number): string {
-  const options: SignOptions = { expiresIn: parseExpiry(env.JWT_REFRESH_EXPIRES) };
+  const options: SignOptions = {
+    expiresIn: parseExpiry(env.JWT_REFRESH_EXPIRES),
+    jwtid: randomUUID(),
+  };
   return jwt.sign({ userId } satisfies TokenPayload, env.JWT_SECRET, options);
 }
 

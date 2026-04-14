@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import * as authService from "../services/authService";
 
 export function useAuth() {
-  const { user, setUser, isAuthenticated } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+  const { user, loading, initialized, setUser, setLoading, setInitialized } =
+    useAuthStore();
 
   const loadUser = useCallback(async () => {
     try {
@@ -22,16 +22,21 @@ export function useAuth() {
       setUser(null);
     } finally {
       setLoading(false);
+      setInitialized();
     }
-  }, [setUser]);
+  }, [setUser, setLoading, setInitialized]);
 
   useEffect(() => {
-    // Try to refresh token on mount to restore session
+    if (initialized) return;
+
     authService
       .refreshToken()
       .then(() => loadUser())
-      .catch(() => setLoading(false));
-  }, [loadUser]);
+      .catch(() => {
+        setLoading(false);
+        setInitialized();
+      });
+  }, [initialized, loadUser, setLoading, setInitialized]);
 
   const login = async (email: string, password: string) => {
     await authService.login(email, password);
@@ -48,5 +53,12 @@ export function useAuth() {
     setUser(null);
   };
 
-  return { user, loading, isAuthenticated: isAuthenticated(), login, register, logout };
+  return {
+    user,
+    loading,
+    isAuthenticated: useAuthStore((s) => s.isAuthenticated()),
+    login,
+    register,
+    logout,
+  };
 }

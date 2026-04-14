@@ -31,12 +31,12 @@ export default function BadgeCard({ badge, earned }: BadgeCardProps) {
     <div
       className={`flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition-all duration-200 ${
         isEarned
-          ? `${rankGlow[badge.rank_tier] ?? ""} bg-white/[0.03]`
-          : "border-white/[0.04] bg-white/[0.01] opacity-40"
+          ? `${rankGlow[badge.rank_tier] ?? ""} bg-white/3`
+          : "border-white/4 bg-white/1 opacity-40"
       }`}
     >
       <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-        isEarned ? "bg-gradient-to-br from-violet-700/30 to-violet-500/30" : "bg-white/[0.04]"
+        isEarned ? "bg-linear-to-br from-violet-700/30 to-violet-500/30" : "bg-white/4"
       }`}>
         <Award size={20} className={isEarned ? (rankText[badge.rank_tier] ?? "text-violet-400") : "text-zinc-700"} />
       </div>

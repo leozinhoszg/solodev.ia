@@ -14,12 +14,12 @@ export default function Card({
 }: CardProps) {
   const base = "rounded-2xl border p-6 transition-all duration-250 ease-out";
   const variants = {
-    default: "border-white/[0.06] bg-white/[0.03]",
+    default: "border-white/6 bg-white/3",
     highlighted:
-      "border-violet-500/20 bg-violet-500/[0.04] shadow-[0_0_15px_rgba(139,92,246,0.08)]",
+      "border-violet-500/20 bg-violet-500/4 shadow-[0_0_15px_rgba(139,92,246,0.08)]",
   };
   const hover = hoverable
-    ? "hover:scale-[1.02] hover:border-white/[0.12] cursor-pointer"
+    ? "hover:scale-[1.02] hover:border-white/12 cursor-pointer"
     : "";
 
   return (

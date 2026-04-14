@@ -1,13 +1,9 @@
+import { useCallback } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  Zap,
-  BookOpen,
-  Crosshair,
-  Castle,
-  LogOut,
-} from "lucide-react";
+import { Zap, BookOpen, Crosshair, Castle, LogOut } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useAuth } from "../../hooks/useAuth";
+import { useIris } from "../../hooks/useIris";
 
 const navItems = [
   { to: "/", label: "Status Window", icon: Zap },
@@ -37,13 +33,21 @@ const rankTextColors: Record<string, string> = {
 export default function Sidebar() {
   const user = useAuthStore((s) => s.user);
   const { logout } = useAuth();
+  const { navigateWithIris, isAnimating } = useIris();
   const rank = user?.currentRank ?? "E";
 
+  const handleLogout = useCallback(async () => {
+    if (isAnimating) return;
+    // Log out first, then iris-close → /login → iris-open
+    await logout();
+    navigateWithIris("/login");
+  }, [logout, navigateWithIris, isAnimating]);
+
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-white/[0.06] bg-[#09090b]">
+    <aside className="flex h-screen w-64 flex-col border-r border-white/6 bg-[#09090b]">
       {/* Logo */}
-      <div className="flex items-center gap-2 border-b border-white/[0.06] px-6 py-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-700 to-violet-500 shadow-[0_0_10px_rgba(124,58,237,0.3)]">
+      <div className="flex items-center gap-2 border-b border-white/6 px-6 py-5">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-violet-700 to-violet-500 shadow-[0_0_10px_rgba(124,58,237,0.3)]">
           <Zap size={16} className="text-white" />
         </div>
         <span className="text-lg font-bold tracking-tight">
@@ -63,8 +67,8 @@ export default function Sidebar() {
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
                     isActive
-                      ? "border-l-[3px] border-violet-500 bg-violet-500/[0.08] pl-[9px] text-slate-100"
-                      : "text-zinc-500 hover:bg-white/[0.04] hover:text-zinc-300"
+                      ? "border-l-[3px] border-violet-500 bg-violet-500/8 pl-[9px] text-slate-100"
+                      : "text-zinc-500 hover:bg-white/4 hover:text-zinc-300"
                   }`
                 }
               >
@@ -77,7 +81,7 @@ export default function Sidebar() {
       </nav>
 
       {/* User profile */}
-      <div className="border-t border-white/[0.06] px-4 py-4">
+      <div className="border-t border-white/6 px-4 py-4">
         <div className="flex items-center gap-3">
           {user?.avatarUrl ? (
             <img
@@ -87,7 +91,7 @@ export default function Sidebar() {
             />
           ) : (
             <div
-              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 bg-white/[0.05] font-mono text-sm font-bold ${rankGlowColors[rank] ?? ""} ${rankTextColors[rank] ?? "text-zinc-400"}`}
+              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 bg-white/5 font-mono text-sm font-bold ${rankGlowColors[rank] ?? ""} ${rankTextColors[rank] ?? "text-zinc-400"}`}
             >
               {user?.name?.charAt(0).toUpperCase() ?? "H"}
             </div>
@@ -96,13 +100,16 @@ export default function Sidebar() {
             <p className="truncate text-sm font-medium text-zinc-200">
               {user?.name ?? "Hunter"}
             </p>
-            <p className={`font-mono text-xs font-medium ${rankTextColors[rank] ?? "text-zinc-500"}`}>
+            <p
+              className={`font-mono text-xs font-medium ${rankTextColors[rank] ?? "text-zinc-500"}`}
+            >
               {rank}-Rank · {user?.totalXp ?? 0} XP
             </p>
           </div>
           <button
-            onClick={logout}
-            className="rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-white/[0.05] hover:text-zinc-400 cursor-pointer"
+            onClick={handleLogout}
+            disabled={isAnimating}
+            className="rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-white/5 hover:text-zinc-400 cursor-pointer disabled:opacity-50"
             aria-label="Sair"
           >
             <LogOut size={16} />
@@ -110,10 +117,12 @@ export default function Sidebar() {
         </div>
 
         {/* Mini XP bar */}
-        <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/[0.06]">
+        <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/6">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-violet-700 to-violet-400 transition-all duration-800 ease-out"
-            style={{ width: `${Math.min(((user?.totalXp ?? 0) % 1000) / 10, 100)}%` }}
+            className="h-full rounded-full bg-linear-to-r from-violet-700 to-violet-400 transition-all duration-800 ease-out"
+            style={{
+              width: `${Math.min(((user?.totalXp ?? 0) % 1000) / 10, 100)}%`,
+            }}
           />
         </div>
       </div>

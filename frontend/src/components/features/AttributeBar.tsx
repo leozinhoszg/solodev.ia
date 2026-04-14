@@ -41,9 +41,9 @@ export default function AttributeBar({
           {value}
         </span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="h-1.5 overflow-hidden rounded-full bg-white/6">
         <div
-          className={`h-full rounded-full bg-gradient-to-r ${colorFrom} ${colorTo} transition-all duration-800 ease-out`}
+          className={`h-full rounded-full bg-linear-to-r ${colorFrom} ${colorTo} transition-all duration-800 ease-out`}
           style={{
             width: `${animatedWidth}%`,
             boxShadow: animatedWidth > 0 ? `0 0 8px ${glowColor}` : "none",

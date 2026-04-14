@@ -73,7 +73,7 @@ export default function CourseDetail() {
         {course.modules.map((mod) => (
           <div
             key={mod.id}
-            className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5"
+            className="rounded-2xl border border-white/6 bg-white/3 p-5"
           >
             <h3 className="mb-3 text-[10px] font-semibold uppercase tracking-[1.5px] text-zinc-500">
               Módulo {mod.order_index} — {mod.title}
@@ -83,7 +83,7 @@ export default function CourseDetail() {
                 <li key={lesson.id}>
                   <Link
                     to={`/courses/${course.id}/lessons/${lesson.id}`}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-zinc-300 transition-all duration-150 hover:bg-white/[0.04]"
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-zinc-300 transition-all duration-150 hover:bg-white/4"
                   >
                     <div className="flex items-center gap-3">
                       <PlayCircle

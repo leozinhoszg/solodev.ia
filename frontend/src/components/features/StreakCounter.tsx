@@ -12,8 +12,8 @@ export default function StreakCounter({ streak }: StreakCounterProps) {
     <div className="flex items-center gap-3">
       <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${
         isActive
-          ? "bg-gradient-to-br from-orange-600/30 to-orange-400/30"
-          : "bg-white/[0.04]"
+          ? "bg-linear-to-br from-orange-600/30 to-orange-400/30"
+          : "bg-white/4"
       }`}>
         <Flame size={20} className={isActive ? "text-orange-400" : "text-zinc-700"} />
       </div>

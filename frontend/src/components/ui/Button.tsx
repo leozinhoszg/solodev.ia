@@ -11,13 +11,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-violet-700 to-violet-500 text-white shadow-[0_0_12px_rgba(124,58,237,0.25)] hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] focus-visible:ring-violet-500",
+    "bg-linear-to-r from-violet-700 to-violet-500 text-white shadow-[0_0_12px_rgba(124,58,237,0.25)] hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] focus-visible:ring-violet-500",
   secondary:
     "bg-white/5 text-zinc-100 border border-white/10 hover:bg-white/8 hover:border-white/15 focus-visible:ring-zinc-500",
   ghost:
     "bg-transparent text-zinc-400 hover:bg-white/5 hover:text-zinc-200 focus-visible:ring-zinc-500",
   danger:
-    "bg-gradient-to-r from-red-700 to-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] focus-visible:ring-red-500",
+    "bg-linear-to-r from-red-700 to-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] focus-visible:ring-red-500",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
