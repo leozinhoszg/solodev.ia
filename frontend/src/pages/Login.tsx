@@ -246,10 +246,18 @@ export default function Login() {
     <div ref={containerRef} className="contents">
       <div
         ref={cardRef}
-        className="relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/5 bg-white/4 opacity-0 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md"
+        className="relative w-full max-w-[420px] overflow-hidden rounded-2xl opacity-0 shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.10),inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-[2px]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 50%, transparent 100%)",
+        }}
       >
+        {/* Top edge highlight — glass rim */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/40 to-transparent" />
+
+        {/* Diagonal shine */}
         <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-2xl">
-          <div className="absolute -top-1/2 -left-1/4 h-[200%] w-[60%] rotate-25 bg-linear-to-b from-white/7 via-white/2 to-transparent" />
+          <div className="absolute -top-1/2 -left-1/4 h-[200%] w-[55%] rotate-25 bg-linear-to-b from-white/10 via-white/3 to-transparent" />
         </div>
 
         <div className="relative z-10 px-8 pt-10 pb-8">
@@ -268,7 +276,7 @@ export default function Login() {
               />
               <SoloDevLogo
                 ref={logoRef}
-                className="h-auto w-44 opacity-0 will-change-transform select-none"
+                className="h-auto w-72 opacity-0 will-change-transform select-none"
               />
             </div>
 
@@ -301,6 +309,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={submitDisabled}
+                className="field-glow"
               />
             </div>
             <div className="opacity-0">
@@ -312,12 +321,13 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={submitDisabled}
+                className="field-glow"
               />
             </div>
             <div className="opacity-0">
               <Button
                 type="submit"
-                className="mt-2 w-full"
+                className="field-glow mt-2 w-full"
                 loading={loading}
                 disabled={submitDisabled}
               >
@@ -341,8 +351,8 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-violet-600/10 via-purple-500/5 to-transparent" />
-        <div className="pointer-events-none absolute -bottom-6 left-1/2 h-12 w-2/3 -translate-x-1/2 rounded-full bg-violet-500/15 blur-2xl" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-violet-600/5 via-purple-500/2 to-transparent" />
+        <div className="pointer-events-none absolute -bottom-6 left-1/2 h-12 w-2/3 -translate-x-1/2 rounded-full bg-violet-500/8 blur-2xl" />
       </div>
     </div>
   );

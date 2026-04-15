@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import Header from "../components/ui/Header";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import Skeleton from "../components/ui/Skeleton";
+import PageHero from "../components/layout/PageHero";
 import CourseCard from "../components/features/CourseCard";
 import { listCourses, type Course } from "../services/courseService";
-import { useStaggered } from "../hooks/useStaggered";
+import { staggerCards } from "../lib/animations";
 
 export default function Courses() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listCourses()
@@ -16,28 +18,36 @@ export default function Courses() {
       .finally(() => setLoading(false));
   }, []);
 
-  const staggered = useStaggered(loading ? 0 : courses.length);
+  useLayoutEffect(() => {
+    if (loading) return;
+    const ctx = gsap.context(() => {
+      staggerCards(".course-card", { delay: 0.2, stagger: 0.08 });
+    }, gridRef);
+    return () => ctx.revert();
+  }, [loading]);
 
   return (
     <div className="flex flex-col gap-8">
-      <Header
-        title="Sistema de Caçadas"
-        subtitle="Escolha sua missão e suba de rank."
+      <PageHero
+        eyebrow="Sistema de Caçadas"
+        title="Escolha sua missão."
+        subtitle="Suba de rank percorrendo cursos gamificados. Cada lição te aproxima do próximo nível."
+        planet="violet"
       />
 
       {loading ? (
-        <div className="flex flex-col gap-4">
-          <Skeleton className="h-20" />
-          <Skeleton className="h-20" />
-          <Skeleton className="h-20" />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <Skeleton className="h-64 rounded-2xl" />
+          <Skeleton className="h-64 rounded-2xl" />
+          <Skeleton className="h-64 rounded-2xl" />
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {courses.map((course, i) => (
-            <div
-              key={course.id}
-              className={`transition-all duration-300 ease-out ${staggered[i] ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
-            >
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {courses.map((course) => (
+            <div key={course.id} className="course-card">
               <CourseCard course={course} />
             </div>
           ))}

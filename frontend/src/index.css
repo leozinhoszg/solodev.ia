@@ -13,7 +13,7 @@ html {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* Atmospheric page background */
+/* Atmospheric page background (legacy — prefer .bg-space) */
 .bg-atmosphere {
   position: relative;
 }
@@ -24,6 +24,137 @@ html {
   background:
     radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.07) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Enhanced space background ── */
+.bg-space {
+  position: relative;
+  background-color: #07070d;
+}
+.bg-space::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(139,92,246,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(59,130,246,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-space::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/stars.svg');
+  background-size: 800px 800px;
+  background-repeat: repeat;
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Glass surfaces (glassmorphism primitives) ── */
+.glass-surface {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.02) 0%,
+    rgba(255,255,255,0.005) 50%,
+    transparent 100%);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.glass-surface-strong {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.008) 50%,
+    rgba(7,7,13,0.55) 100%);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.glass-rim-top::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.40),
+    transparent);
+  pointer-events: none;
+  z-index: 25;
+}
+
+.glass-rim-right::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(255,255,255,0.12),
+    transparent);
+  pointer-events: none;
+  z-index: 25;
+}
+
+.glass-shine > .glass-shine__el,
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -25%;
+  height: 200%;
+  width: 55%;
+  transform: rotate(25deg);
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.03),
+    transparent);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.glass-violet-glow {
+  position: relative;
+}
+.glass-violet-glow::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 7rem;
+  background: linear-gradient(to top,
+    rgba(124,58,237,0.05),
+    rgba(168,85,247,0.02),
+    transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.glass-violet-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  height: 3rem;
+  width: 66%;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background-color: rgba(139,92,246,0.08);
+  filter: blur(32px);
   pointer-events: none;
   z-index: 0;
 }
@@ -82,6 +213,30 @@ html {
 }
 .animate-scale-in {
   animation: scaleIn 0.2s ease-out both;
+}
+
+/* Field outer glow — pulses while hovered or focused */
+@keyframes fieldGlowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(139, 92, 246, 0.35),
+      0 0 12px rgba(139, 92, 246, 0.35),
+      0 0 24px rgba(139, 92, 246, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(167, 139, 250, 0.55),
+      0 0 22px rgba(139, 92, 246, 0.6),
+      0 0 40px rgba(139, 92, 246, 0.3);
+  }
+}
+.field-glow {
+  transition: box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+}
+.field-glow:hover:not(:disabled),
+.field-glow:focus:not(:disabled),
+.field-glow:focus-visible:not(:disabled) {
+  animation: fieldGlowPulse 2s ease-in-out infinite;
 }
 
 /* Scrollbar */

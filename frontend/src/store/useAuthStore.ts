@@ -5,6 +5,7 @@ interface User {
   name: string;
   email: string;
   plan: "free" | "pro";
+  role: "user" | "admin";
   currentRank: string;
   totalXp: number;
   avatarUrl: string | null;

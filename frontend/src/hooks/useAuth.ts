@@ -14,6 +14,7 @@ export function useAuth() {
         name: userData.name,
         email: userData.email,
         plan: userData.plan,
+        role: userData.role ?? "user",
         currentRank: userData.current_rank,
         totalXp: userData.total_xp,
         avatarUrl: userData.avatar_url,

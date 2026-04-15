@@ -10,6 +10,7 @@ interface UserData {
   name: string;
   email: string;
   plan: "free" | "pro";
+  role: "user" | "admin";
   current_rank: string;
   total_xp: number;
   avatar_url: string | null;

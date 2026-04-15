@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CheckCircle } from "lucide-react";
-import Header from "../components/ui/Header";
+import { CheckCircle, ArrowLeft } from "lucide-react";
+import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import Skeleton from "../components/ui/Skeleton";
 import LessonPlayer from "../components/features/LessonPlayer";
@@ -41,12 +41,9 @@ export default function Lesson() {
   if (loading) {
     return (
       <div className="flex flex-col gap-6">
-        <div>
-          <Skeleton className="h-7 w-72" />
-          <Skeleton className="mt-2 h-4 w-40" />
-        </div>
+        <Skeleton className="h-10 w-72" />
         <Skeleton className="aspect-video w-full rounded-2xl" />
-        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-12 w-48" />
       </div>
     );
   }
@@ -64,24 +61,35 @@ export default function Lesson() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Header
-        title={lesson.title}
-        subtitle={`+${lesson.xp_reward} XP ao completar`}
-        action={
-          <Link to={`/courses/${id}`}>
-            <Button variant="ghost">← Voltar ao curso</Button>
+      {/* Header strip */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <Link
+            to={`/courses/${id}`}
+            className="inline-flex items-center gap-1 text-xs text-zinc-500 transition-colors hover:text-violet-300"
+          >
+            <ArrowLeft size={14} /> Voltar ao curso
           </Link>
-        }
-      />
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-100 lg:text-3xl">
+            {lesson.title}
+          </h1>
+          <p className="mt-1 font-mono text-xs text-violet-400">
+            +{lesson.xp_reward} XP ao completar
+          </p>
+        </div>
+      </div>
 
-      <LessonPlayer videoUrl={lesson.video_url} title={lesson.title} />
+      {/* Player framed in glass */}
+      <Card variant="glass-violet" rim className="!p-3">
+        <LessonPlayer videoUrl={lesson.video_url} title={lesson.title} />
+      </Card>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         {completed && xpEarned > 0 && (
-          <div className="flex items-center gap-2 animate-fade-in-up">
+          <div className="animate-fade-in-up flex items-center gap-2">
             <CheckCircle
               size={18}
-              className="text-emerald-400 animate-glow-pulse"
+              className="animate-glow-pulse text-emerald-400"
             />
             <p className="font-mono text-sm font-bold text-emerald-400">
               +{xpEarned} XP conquistados!
@@ -99,7 +107,8 @@ export default function Lesson() {
           onClick={handleComplete}
           loading={completing}
           disabled={completed}
-          variant={completed ? "secondary" : "primary"}
+          variant={completed ? "secondary" : "glass-primary"}
+          size="lg"
         >
           {completed ? "Missão concluída" : "Marcar como concluída"}
         </Button>

@@ -8,6 +8,7 @@ export interface UserRow extends RowDataPacket {
   password: string;
   avatar_url: string | null;
   plan: "free" | "pro";
+  role: "user" | "admin";
   plan_expires_at: Date | null;
   current_rank: string;
   total_xp: number;

@@ -1,46 +1,31 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Castle, Lock, ChevronRight, CheckCircle } from "lucide-react";
-import Header from "../components/ui/Header";
-import Card from "../components/ui/Card";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { CheckCircle } from "lucide-react";
+import gsap from "gsap";
 import Skeleton from "../components/ui/Skeleton";
+import PageHero from "../components/layout/PageHero";
+import ModuleCard from "../components/features/ModuleCard";
 import { listDungeons, type Dungeon } from "../services/dungeonService";
+import { staggerCards } from "../lib/animations";
 
-const rankColors: Record<string, string> = {
-  C: "text-blue-400",
-  B: "text-violet-400",
-  A: "text-orange-400",
-  S: "text-red-400",
+const rankTone: Record<string, "blue" | "violet" | "orange" | "red" | "zinc"> = {
+  C: "blue",
+  B: "violet",
+  A: "orange",
+  S: "red",
 };
 
-const rankGlow: Record<string, string> = {
-  C: "hover:border-blue-400/20 hover:shadow-[0_0_12px_rgba(96,165,250,0.1)]",
-  B: "hover:border-violet-400/20 hover:shadow-[0_0_12px_rgba(167,139,250,0.1)]",
-  A: "hover:border-orange-400/20 hover:shadow-[0_0_12px_rgba(251,146,60,0.1)]",
-  S: "hover:border-red-400/20 hover:shadow-[0_0_12px_rgba(248,113,113,0.1)]",
-};
-
-function StatusBadge({ status }: { status: Dungeon["status"] }) {
-  if (status === "completed") {
-    return (
-      <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-400">
-        <CheckCircle size={12} /> Conquistado
-      </span>
-    );
-  }
-  if (status === "in_progress") {
-    return (
-      <span className="rounded-full bg-violet-500/10 px-2.5 py-1 text-[10px] font-semibold text-violet-400">
-        Em progresso
-      </span>
-    );
-  }
-  return null;
+function statusBadge(status: Dungeon["status"]):
+  | { text: string; tone: "green" | "violet" }
+  | undefined {
+  if (status === "completed") return { text: "Conquistado", tone: "green" };
+  if (status === "in_progress") return { text: "Em progresso", tone: "violet" };
+  return undefined;
 }
 
 export default function Dungeons() {
   const [dungeons, setDungeons] = useState<Dungeon[]>([]);
   const [loading, setLoading] = useState(true);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listDungeons()
@@ -49,14 +34,22 @@ export default function Dungeons() {
       .finally(() => setLoading(false));
   }, []);
 
+  useLayoutEffect(() => {
+    if (loading) return;
+    const ctx = gsap.context(() => {
+      staggerCards(".dungeon-card", { delay: 0.2, stagger: 0.08 });
+    }, gridRef);
+    return () => ctx.revert();
+  }, [loading]);
+
   if (loading) {
     return (
       <div className="flex flex-col gap-8">
-        <Header title="Dungeons" subtitle="Projetos guiados para subir de rank." />
-        <div className="flex flex-col gap-4">
-          <Skeleton className="h-28" />
-          <Skeleton className="h-28" />
-          <Skeleton className="h-28" />
+        <Skeleton className="h-40 rounded-3xl" />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <Skeleton className="h-64 rounded-2xl" />
+          <Skeleton className="h-64 rounded-2xl" />
+          <Skeleton className="h-64 rounded-2xl" />
         </div>
       </div>
     );
@@ -64,49 +57,54 @@ export default function Dungeons() {
 
   return (
     <div className="flex flex-col gap-8">
-      <Header title="Dungeons" subtitle="Projetos guiados para subir de rank." />
+      <PageHero
+        eyebrow="Dungeons"
+        title="Projetos que valem XP de verdade."
+        subtitle="Dungeons são desafios guiados por checkpoints. Derrote o boss e prove seu rank."
+        planet="violet"
+      />
 
-      <div className="flex flex-col gap-4">
-        {dungeons.map((d) =>
-          d.locked ? (
-            <Card key={d.id} className="opacity-50">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/4">
-                  <Lock size={20} className="text-zinc-700" />
-                </div>
-                <div className="flex-1">
-                  <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${rankColors[d.rank_required] ?? "text-zinc-400"}`}>
-                    {d.rank_required}-Rank
-                  </span>
-                  <h3 className="text-base font-semibold text-zinc-500">{d.title}</h3>
-                  <p className="mt-1 text-xs text-zinc-700">Requer rank {d.rank_required} para desbloquear</p>
-                </div>
-              </div>
-            </Card>
-          ) : (
-            <Link key={d.id} to={`/projects/${d.slug}`}>
-              <Card variant="highlighted" hoverable className={rankGlow[d.rank_required] ?? ""}>
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-violet-700/20 to-violet-500/20">
-                    <Castle size={20} className={rankColors[d.rank_required] ?? "text-violet-400"} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className={`font-mono text-[10px] font-bold uppercase tracking-wider ${rankColors[d.rank_required] ?? "text-zinc-400"}`}>
-                        {d.rank_required}-Rank
+      <div
+        ref={gridRef}
+        className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {dungeons.map((d) => {
+          const badge = statusBadge(d.status) ?? {
+            text: `${d.rank_required}-Rank`,
+            tone: rankTone[d.rank_required] ?? "zinc",
+          };
+          const imageFallback =
+            d.rank_required === "S" || d.rank_required === "A" ? "violet" : "blue";
+          return (
+            <div key={d.id} className="dungeon-card">
+              <ModuleCard
+                title={d.title}
+                description={d.description ?? undefined}
+                imageFallback={imageFallback}
+                badge={badge}
+                locked={d.locked}
+                lockedReason={
+                  d.locked ? `Requer rank ${d.rank_required}` : undefined
+                }
+                href={d.locked ? undefined : `/projects/${d.slug}`}
+                meta={
+                  !d.locked && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-mono font-bold text-zinc-500">
+                        +{d.xp_reward} XP
                       </span>
-                      <StatusBadge status={d.status} />
+                      {d.status === "completed" && (
+                        <span className="flex items-center gap-1 text-emerald-400">
+                          <CheckCircle size={12} /> Feito
+                        </span>
+                      )}
                     </div>
-                    <h3 className="text-base font-semibold text-slate-100">{d.title}</h3>
-                    <p className="mt-1 text-xs text-zinc-500">{d.description}</p>
-                    <p className="mt-2 font-mono text-xs font-bold text-zinc-600">+{d.xp_reward} XP</p>
-                  </div>
-                  <ChevronRight size={18} className="text-violet-400" />
-                </div>
-              </Card>
-            </Link>
-          ),
-        )}
+                  )
+                }
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

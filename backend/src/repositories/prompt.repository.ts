@@ -44,9 +44,10 @@ export async function findUserSubmissions(
   userId: number,
   limit = 20,
 ): Promise<PromptSubmissionRow[]> {
+  const lim = Math.max(1, Math.min(Number(limit) | 0, 500));
   const [rows] = await pool.execute<PromptSubmissionRow[]>(
-    "SELECT * FROM prompt_submissions WHERE user_id = ? ORDER BY created_at DESC LIMIT ?",
-    [userId, limit],
+    `SELECT * FROM prompt_submissions WHERE user_id = ? ORDER BY created_at DESC LIMIT ${lim}`,
+    [userId],
   );
   return rows;
 }

@@ -1,13 +1,25 @@
 import { forwardRef, type InputHTMLAttributes } from "react";
 
+type InputVariant = "default" | "glass";
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  variant?: InputVariant;
 }
 
+const variantClasses: Record<InputVariant, string> = {
+  default: "border-white/8 bg-white/4",
+  glass: "border-white/10 bg-white/[0.03] backdrop-blur-[2px]",
+};
+
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, id, className = "", ...props }, ref) => {
+  (
+    { label, error, id, variant = "default", className = "", ...props },
+    ref,
+  ) => {
     const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
+    const autoGlow = variant === "glass" ? "field-glow" : "";
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
@@ -21,7 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={inputId}
-          className={`rounded-lg border border-white/8 bg-white/4 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition-all duration-200 focus:border-violet-500/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] disabled:opacity-50 ${error ? "border-red-500/50" : ""} ${className}`}
+          className={`rounded-lg border px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none transition-all duration-200 focus:border-violet-500/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] disabled:opacity-50 ${variantClasses[variant]} ${autoGlow} ${error ? "border-red-500/50" : ""} ${className}`}
           {...props}
         />
         {error && <span className="text-xs text-red-400">{error}</span>}
